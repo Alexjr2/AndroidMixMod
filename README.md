@@ -1,7 +1,7 @@
 # AndroidMixMod
 > [!WARNING]
 > Need to Signed the Release apk
-> used MT manager, NP manager, ApktoolM or or other signing tools.
+> used MT manager, NP manager, ApktoolM or other signing tools.
 
 ## Download apk from latest [release](https://github.com/DeNcHiK3713/AndroidMixMod/releases/latest)
 

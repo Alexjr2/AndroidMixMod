@@ -18,7 +18,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@main
         with:
-          gradle-version: 8.9
+          gradle-version: 7.5.1
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2
       - name: Setup NDK

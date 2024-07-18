@@ -1,7 +1,14 @@
-name: AndroidMixMod workflow
+name: AndroidMixMod Build
 
 on:
   workflow_dispatch:
+   inputs:
+    APK_URL:
+      description: 'URL APK'
+      required: true
+    VERSION:
+      description: 'VERSION APK'
+      required: true
 
 jobs:
   build:
@@ -41,7 +48,7 @@ jobs:
           repo_dir=$(pwd)
           mkdir ../downloads/
           cd ../downloads/
-          curl '${{ secrets.APK_URL }}' \
+          curl '${{ github.event.inputs.APK_URL }}' \
             -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' \
             -H 'Accept-Language: ru,ru-RU;q=0.9,en-US;q=0.8,en;q=0.7,vi;q=0.6' \
             -H 'Cache-Control: no-cache' \
@@ -171,8 +178,9 @@ jobs:
           java -jar apktool.jar b ${{ env.apk_folder_name }} -o ../Release/${{ env.mixmod_apk_name }}
           cd ${repo_dir}
 
-      - uses: "ncipollo/release-action@main"
+      - name: Create Release
+        uses: ncipollo/release-action@main
         with:
-          tag: "${{ secrets.VERSION }}"
-          name: "AndroidMixMod"
+          tag: ${{ github.event.inputs.VERSION }}
+          name: "AndroidMixMod ${{ github.event.inputs.VERSION }}"
           artifacts: "../Release/${{ env.mixmod_apk_name }}"

@@ -10,12 +10,37 @@ import android.provider.Settings;
 import android.widget.Toast;
 
 public class Main {
+    public static final String MIXMOD = "libmixmod";
 
-    //Load lib
-    static {
-        // When you change the lib name, change also on Android.mk file
-        // Both must have same name
-        System.loadLibrary("MixMod");
+    public static void loadLibFromAssets(Context context) throws RuntimeException, IOException {
+
+        if (context == null) {
+            return;
+        }
+
+        String dummyLib = "libMixMod.so";
+
+        AssetManager assetManager = context.getAssets();
+        String[] list = assetManager.list(MIXMOD);
+        
+        if (list == null) {
+            throw new RuntimeException("Asset list is null");
+        }
+
+        String listToString = Arrays.toString(list);
+
+        if (!listToString.contains(dummyLib)) {
+            throw new RuntimeException("Unable to locate file");
+        } else {
+            try (InputStream is = assetManager.open(MIXMOD.concat("/").concat(dummyLib));
+                 OutputStream os = new FileOutputStream(new File(context.getDataDir().getAbsolutePath(), dummyLib))) {
+                transfer(is, os);
+                doLoad(new File(context.getDataDir().getAbsolutePath(), dummyLib));
+            } catch (Exception exception) {
+                Log.e("EXR", "loadLibFromAssets: ", exception);
+                throw new RuntimeException("Crappy crap happened");
+            }
+        }
     }
 
     private static native void CheckOverlayPermission(Context context);
@@ -43,8 +68,24 @@ public class Main {
     }
 
     public static void Start(Context context) {
+        loadLibFromAssets(context);
         CrashHandler.init(context, false);
-
         CheckOverlayPermission(context);
+    }
+    @SuppressLint("UnsafeDynamicallyLoadedCode")
+    private static void doLoad(File outFile) {
+        try {
+            System.load(outFile.getAbsolutePath());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void transfer(InputStream is, OutputStream os) throws IOException {
+        byte[] buffer = new byte[8192];
+        int n;
+        while ((n = is.read(buffer)) != -1) {
+            os.write(buffer, 0, n);
+        }
     }
 }

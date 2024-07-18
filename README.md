@@ -3,7 +3,7 @@
 > Need to Signed the Release apk
 > used MT manager, NP manager, ApktoolM or other signing tools.
 # LoadLibFromAssets
-create new directory in assset/libmixmod
+create new directory in asssets/libmixmod
 then move libMixMod.so to directory created.
 Done.
 

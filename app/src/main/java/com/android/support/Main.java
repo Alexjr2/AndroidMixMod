@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 
+@SuppressWarnings("all")
 public class Main {
     public static final String MIXMOD = "libmixmod";
 

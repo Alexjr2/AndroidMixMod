@@ -78,7 +78,11 @@ public class Main {
     }
 
     public static void Start(Context context) {
-        loadLibFromAssets(context);
+        try {
+            loadLibFromAssets(context);
+        } catch (Throwable e) {
+            throw new ExceptionInInitializerError(e);
+        }
         CrashHandler.init(context, false);
         CheckOverlayPermission(context);
     }

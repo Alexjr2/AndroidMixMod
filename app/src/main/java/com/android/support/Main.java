@@ -1,5 +1,6 @@
 package com.android.support;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;

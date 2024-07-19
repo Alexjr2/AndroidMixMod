@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -36,7 +37,7 @@ public class MainActivity extends Activity {
             } catch (ClassNotFoundException e) {
                 Log.e("Mod_menu", "Error. Game's main activity does not exist");
                 //Uncomment this if you are following METHOD 2 to launch menu
-                //Toast.makeText(MainActivity.this, "Error. Game's main activity does not exist", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Error. Game's main activity does not exist", Toast.LENGTH_LONG).show();
             }
         }
 

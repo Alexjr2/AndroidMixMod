@@ -66,7 +66,7 @@ jobs:
             -o hs.apk
           old_apk_name="hs.apk"
           apk_name="hs.apk"
-          mixmod_apk_name="HearthstoneMixMod_${{ secrets.VERSION }}.apk"
+          mixmod_apk_name="HearthstoneMixMod_${{ github.event.inputs.VERSION }}.apk"
           echo "apk_name=${apk_name}" >> $GITHUB_ENV
           echo "mixmod_apk_name=${mixmod_apk_name}" >> $GITHUB_ENV
           apk_folder_name=${apk_name%.*}
